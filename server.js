@@ -3,7 +3,6 @@ const fs = require("fs");
 const db = require("./db/db.json");
 const path = require("path");
 const { v4: uuidv4 } = require("uuid");
-console.log(uuidv4());
 
 const app = express();
 const PORT = 3000;
@@ -20,15 +19,15 @@ app.get("/notes", (req, res) => {
 });
 
 app.get("/api/notes", (req, res) => {
-  console.log(db);
-  //res.send("GET notes");
   res.json(db);
 });
 
 app.post("/api/notes", (req, res) => {
   const { title, text } = req.body;
   const id = uuidv4();
+
   db.push({ id, title, text });
+
   fs.writeFile("db/db.json", JSON.stringify(db), function (err) {
     if (err) {
       console.log(err);
@@ -41,8 +40,21 @@ app.post("/api/notes", (req, res) => {
 
 app.delete("/api/notes/:id", (req, res) => {
   const { id } = req.params;
-  console.log(req.params);
-  res.send(`DELETED note ${id}`);
+
+  db.forEach((note, index) => {
+    if (id === note.id) {
+      db.splice(index, 1);
+    }
+  });
+
+  fs.writeFile("db/db.json", JSON.stringify(db), function (err) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("Success!");
+    }
+    res.send(`DELETED note ${id}`);
+  });
 });
 
 // Listener
