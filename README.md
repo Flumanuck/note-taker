@@ -11,4 +11,6 @@ This application allows the user to write, save, and delete notes using Express.
 - When you are finished, click the disk icon to save your notes.
 - If you want to delete any notes you have created, click the trashcan symbol next to whatever note you wish to delete.
 
-## Screenshot
+## Screenshots
+
+![screenshot of website](https://github.com/Flumanuck/note-taker/blob/main/Screenshot.PNG?raw=true)
