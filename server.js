@@ -24,7 +24,15 @@ app.get("/api/notes", (req, res) => {
 });
 
 app.post("/api/notes", (req, res) => {
-  res.send("POST notes");
+  db.push(req.body);
+  fs.writeFile("db/db.json", JSON.stringify(db), function (err) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("Success!");
+    }
+    res.send("POSTED note");
+  });
 });
 
 app.delete("/api/notes/:id", (req, res) => {
